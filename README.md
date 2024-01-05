@@ -26,13 +26,13 @@ These instructions will get you a copy of the project up and running on your loc
 After installing the prerequisites and cloning this repo, go into the repo and create a virtual env:
 
 ```
-virtualenv env
+python -m venv venv
 ```
 
-Activate the env:
+Activate the virtual enviroment:
 
 ```
-source env/bin/activate
+source venv/Scripts/activate
 ```
 
 Install the dependencies:
@@ -44,7 +44,7 @@ pip install -r requirements.txt
 Run the game with:
 
 ```
-python chess_ai.py
+python src/app.py
 ```
 
 It is HIGHLY recommended that you run ```chess_ai.py``` with PyPy to greatly reduce computation time.

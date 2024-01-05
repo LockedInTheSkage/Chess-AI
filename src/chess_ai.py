@@ -20,9 +20,6 @@ with open("src/moves_cache.json", "r") as f:
     except ValueError:
         cache_moves = {"even": {}, "odd": {}}
 
-even_moves = cache_moves["even"]
-odd_moves = cache_moves["odd"]
-
 # Magenta = '\033[95m'
 # Blue = '\033[94m'
 # Green = '\033[92m'
@@ -36,7 +33,7 @@ odd_moves = cache_moves["odd"]
 class Game_Engine:
     def __init__(self, board_state):
         self.game = Game(board_state)
-        self.computer = AI(self.game)
+        self.computer = AI(self.game, )
 
     def prompt_user(self):
         print(
