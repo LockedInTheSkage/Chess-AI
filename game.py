@@ -16,6 +16,7 @@ from collections import namedtuple
 
 from board import Board
 from moves import MOVES
+import math
 
 # Define a named tuple with FEN field names to hold game state information
 State = namedtuple('State', ['player', 'rights', 'en_passant', 'ply', 'turn'])
@@ -53,7 +54,6 @@ class Game(object):
         self.board = Board()
         self.state = State(' ', ' ', ' ', ' ', ' ')
         self.move_history = []
-        self.fen_history = []
         self.validate = validate
         self.set_fen(fen=fen)
 
@@ -87,20 +87,19 @@ class Game(object):
         properties, and append the FEN string to the game history *without*
         clearing it first.
         """
-        self.fen_history.append(fen)
         fields = fen.split(' ')
         fields[4] = int(fields[4])
         fields[5] = int(fields[5])
         self.state = State(*fields[1:])
         self.board.set_position(fields[0])
 
+    
     def reset(self, fen=default_fen):
         """
         Clear the game history and set the board to the default starting
         position.
         """
         self.move_history = []
-        self.fen_history = []
         self.set_fen(fen)
 
     # def _translate(self, move):
@@ -182,7 +181,15 @@ class Game(object):
                 piece = piece.upper()
 
         # record the move in the game history and apply it to the board
-        self.move_history.append(move)
+        algNote=piece.upper()+move
+        if target.strip() != "":
+            algNote=piece.upper()+move[:2]+"x"+move[2:4]
+        if algNote[0]=="P":
+            algNote=algNote[1:]
+        if self.state.player == 'w':
+            self.move_history.append(f"{math.ceil((len(self.move_history)+1)/2)}. {algNote}")
+        elif len(self.move_history)>0:
+            self.move_history[-1]+=f" {algNote}"
         self.board.move_piece(start, end, piece)
 
         # move the rook to the other side of the king in case of castling
