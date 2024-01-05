@@ -453,7 +453,7 @@ class AI:
         sys.stdout.write("\033[K")
         print(score_tab)
 
-    def greedy_make_move(self, board_state):
+    def greedy_make_move(self, board_state) -> str:
         possible_moves = self.get_moves(board_state)
         alpha = float("-inf")
         beta = float("inf")
@@ -484,7 +484,7 @@ class AI:
             self.cache[cache_parse] = alpha
         return best_move.algebraic_move
 
-    def greedy_minimax(self, node, alpha, beta, start_time, current_depth=0):
+    def greedy_minimax(self, node, alpha, beta, start_time, current_depth=0) -> float:
         current_depth += 1
         board_state = node.board_state
         cache_parse = zobrist.hash(
